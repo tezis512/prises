@@ -33,9 +33,13 @@ class Offer
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'offers')]
     private Collection $categories;
 
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'offers')]
+    private Collection $products;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,6 +136,33 @@ class Offer
     {
         if ($this->categories->removeElement($category)) {
             $category->removeOffer($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->addOffer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            $product->removeOffer($this);
         }
 
         return $this;

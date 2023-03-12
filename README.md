@@ -27,8 +27,6 @@ Run `php bin/console import:category WB 9735` to import category 9735 from Wildb
 * Just 2 services (PHP FPM and Caddy server)
 * Super-readable configuration
 
-**Enjoy!**
-
 ## Docs
 
 1. [Build options](docs/build.md)

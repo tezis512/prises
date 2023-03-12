@@ -61,10 +61,7 @@ class WildberriesManager implements IntegrationManagerInterface
                 try {
                     $result = $this->offerManager->import($offer);
                 } catch (\Exception $exception) {
-                    var_dump($exception->getMessage());
-                    var_dump($exception->getFile());
-                    var_dump($exception->getLine());
-                    die();
+                    // Handle error here
                 }
 
 //                if ($result->isSuccess()) {
