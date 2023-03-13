@@ -7,6 +7,10 @@ namespace App\Contracts;
 interface StringSimilarityProcessorInterface
 {
     /**
+     * Levenshtein
+     * Jaro Winkler
+     * Smith Waterman Gotoh
+     *
      * @param string $compareFrom
      * @param string $compareTo
      * @return int

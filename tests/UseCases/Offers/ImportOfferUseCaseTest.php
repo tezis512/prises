@@ -6,16 +6,15 @@ use App\DataObject\ImportResult;
 use App\Entity\Offer;
 use App\Repository\OfferRepository;
 use App\Repository\PriceChangeRepository;
+use App\Tests\BaseDatabaseTestCase;
 use App\UseCases\Offers\ImportOfferUseCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class ImportOfferUseCaseTest extends KernelTestCase
+class ImportOfferUseCaseTest extends BaseDatabaseTestCase
 {
     private const TEST_VENDOR_CODE = 'TVC';
-
-    private EntityManagerInterface $entityManager;
 
     private ImportOfferUseCase $sut;
 
@@ -25,14 +24,9 @@ class ImportOfferUseCaseTest extends KernelTestCase
     {
         parent::setUp();
 
-        $kernel = self::bootKernel();
-
-        $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
-        $this->entityManager->beginTransaction();
-
         $this->repository = $this->entityManager->getRepository(Offer::class);
 
-        $this->sut = $kernel->getContainer()->get(ImportOfferUseCase::class);
+        $this->sut = $this->container->get(ImportOfferUseCase::class);
     }
 
     public function testOffersAreImported(): void
@@ -125,12 +119,5 @@ class ImportOfferUseCaseTest extends KernelTestCase
         }
 
         $this->entityManager->flush();
-    }
-
-    public function tearDown(): void
-    {
-        $this->entityManager->rollback();
-
-        parent::tearDown();
     }
 }

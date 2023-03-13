@@ -21,6 +21,9 @@ class Product
     #[ORM\ManyToMany(targetEntity: Offer::class, inversedBy: 'products')]
     private Collection $offers;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Brand $brand = null;
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
@@ -63,6 +66,18 @@ class Product
     public function removeOffer(Offer $offer): self
     {
         $this->offers->removeElement($offer);
+
+        return $this;
+    }
+
+    public function getBrand(): ?Brand
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(?Brand $brand): self
+    {
+        $this->brand = $brand;
 
         return $this;
     }

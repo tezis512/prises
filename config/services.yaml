@@ -20,6 +20,10 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\UseCases\:
+        resource: '../src/UseCases/'
+        public: true
+
     App\UseCases\Offers\ImportOfferUseCase:
         public: true
 
@@ -33,6 +37,9 @@ services:
     App\EventSybscribers\PriceChangedEventSubscriber:
         tags:
             - { name: kernel.event_listener, event: offer.price_changed, method: process }
+
+    App\Contracts\StringSimilarityProcessorInterface:
+        class: App\UseCases\Products\StringSimilarityProcessors\SimilarWordsProcessor
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
